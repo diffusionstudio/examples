@@ -163,6 +163,7 @@ button:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 1rem;
 }
 
 #controls {
@@ -214,4 +215,18 @@ button:hover {
   margin-top: 1rem;
   font-size: medium;
   display: none;
+}
+
+#repo {
+  background-color: hsl(var(--muted) / .6);
+  padding: 4px 12px;
+  border-radius: 6px;
+  border: 1px solid hsl(var(--muted-foreground) / .1);
+  text-decoration: none;
+}
+
+#repo > code {
+  font-size: larger;
+  font-weight: 500;
+  color: hsl(var(--muted-foreground));
 }
