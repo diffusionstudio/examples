@@ -230,3 +230,14 @@ button:hover {
   font-weight: 500;
   color: hsl(var(--muted-foreground));
 }
+
+@media (width <= 680px) {
+  #repo > code {
+    font-size: medium;
+  }
+
+  #repo {
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+}
