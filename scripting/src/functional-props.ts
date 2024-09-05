@@ -10,14 +10,14 @@ export async function main(composition: core.Composition) {
 
   await composition.add(
     new core.ImageClip(sources[1], {
-      x(this: core.TextClip, time: core.Timestamp) {
+      x(this: core.ImageClip, time: core.Timestamp) {
         const width = typeof this.width == 'number' ? this.width : 0;
         const range = composition.width - width;
         const x = (time.seconds * 500) % (range * 2);
 
         return x > range ? range * 2 - x : x;
       },
-      y(this: core.TextClip, time: core.Timestamp) {
+      y(this: core.ImageClip, time: core.Timestamp) {
         const height = typeof this.height == 'number' ? this.height : 0;
         const range = composition.height - height;
         const y = (time.seconds * 200) % (range * 2);
