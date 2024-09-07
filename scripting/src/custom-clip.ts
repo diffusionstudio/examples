@@ -7,10 +7,10 @@ interface AlienClipProps extends core.ClipProps {
 
 class AlienClip extends core.Clip<AlienClipProps> {
   public sprite = new Sprite();
-  public speed = 50;
+  public speed = 0.2;
 
   public constructor(props: AlienClipProps = {}) {
-    super();
+    super(props);
 
     this.sprite.anchor.set(0.5);
     this.sprite.scale.set(2);
@@ -30,7 +30,7 @@ class AlienClip extends core.Clip<AlienClipProps> {
   public update(time: core.Timestamp): void | Promise<void> {
     this.sprite.x = this.track!.composition!.width / 2;
     this.sprite.y = this.track!.composition!.height / 2;
-    this.sprite.angle = time.millis * this.speed / 360;
+    this.sprite.angle = time.millis * this.speed;
   }
 
   public exit(): void {
@@ -39,5 +39,5 @@ class AlienClip extends core.Clip<AlienClipProps> {
 }
 
 export async function main(composition: core.Composition) {
-  await composition.add(new AlienClip({ speed: 80, stop: 150 }));
+  await composition.add(new AlienClip({ speed: 0.4, stop: 150 }));
 };
