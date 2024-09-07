@@ -16,7 +16,7 @@
 
 This repository contains example projects built using [Diffusion Studio](https://github.com/diffusionstudio/core). This is an ideal starting point for exploring Diffusion Studio, if you prefer learning from code examples rather than detailed documentation.
 
-## Simple Example
+## `/simple`
 
 This project is powered by Vite (vanilla TypeScript). To begin, navigate to the project directory:
 
