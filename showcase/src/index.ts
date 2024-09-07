@@ -16,7 +16,7 @@ const backButton = document.querySelector('[data-lucide="skip-back"]') as HTMLEl
 const forwardButton = document.querySelector('[data-lucide="skip-forward"]') as HTMLElement;
 
 async function loadScript(name: string) {
-  const module = await import(`./${name}.ts`);
+  const module = await import(`./compositions/${name}.ts`);
   const main: MainFn = module.main;
   const settings: Settings = module.settings;
   const composition = new core.Composition({

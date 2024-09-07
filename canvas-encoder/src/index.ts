@@ -1,18 +1,21 @@
-import { Application, buildGeometryFromPath, GraphicsPath, Mesh, Texture } from 'pixi.js';
+import { buildGeometryFromPath, Container, GraphicsPath, Mesh, Texture, WebGLRenderer } from 'pixi.js';
 import { CanvasEncoder, downloadObject } from '@diffusionstudio/core';
 
 (async () => {
   // Create a new application
-  const app = new Application();
+  const renderer = new WebGLRenderer();
+
+  // Create root container
+  const stage = new Container();
 
   // Initialize the application
-  await app.init({
+  await renderer.init({
     backgroundColor: 'brown',
     height: 1080,
     width: 1920,
   });
 
-  document.body.appendChild(app.canvas);
+  document.body.appendChild(renderer.canvas);
 
   const path = new GraphicsPath()
     .rect(-50, -50, 100, 100)
@@ -28,8 +31,8 @@ import { CanvasEncoder, downloadObject } from '@diffusionstudio/core';
   const meshes: Mesh[] = [];
 
   for (let i = 0; i < 200; i++) {
-    const x = Math.random() * app.screen.width;
-    const y = Math.random() * app.screen.height;
+    const x = Math.random() * renderer.screen.width;
+    const y = Math.random() * renderer.screen.height;
 
     const mesh = new Mesh({
       geometry,
@@ -39,17 +42,18 @@ import { CanvasEncoder, downloadObject } from '@diffusionstudio/core';
       tint: Math.random() * 0xffffff,
     });
 
-    app.stage.addChild(mesh);
+    stage.addChild(mesh);
 
     meshes.push(mesh);
   }
 
   // create new encoder with a framerate of 30FPS
-  const encoder = new CanvasEncoder(app.canvas);
+  const encoder = new CanvasEncoder(renderer.canvas);
 
   for (let i = 0; i < 180; i++) {
+    renderer.clear();
     // render to canvas
-    app.render();
+    renderer.render({ container: stage, clear: false });
     // encode current canvas state
     await encoder.encodeVideo();
     // animate
