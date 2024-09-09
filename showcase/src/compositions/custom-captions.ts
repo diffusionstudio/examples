@@ -64,7 +64,7 @@ export async function main(composition: core.Composition) {
     }
   }
 
-  await audio.generateCaptions(TikTokCaptionPreset); // <- insert here
+  await audio.addCaptions(TikTokCaptionPreset); // <- insert here
 
   composition.duration = audio.duration;
 }

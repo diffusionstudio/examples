@@ -11,28 +11,19 @@ export async function main(composition: core.Composition) {
   const duration = video.duration.frames;
   composition.duration = duration;
 
-  await composition.add(
+  const text = await composition.add(
     new core.TextClip({
       text: 'Hello World',
       position: 'center', // use one of the default fonts
       font: core.Font.fromFamily({ family: 'The Bold Font', weight: '500' }),
-      rotation: new core.Keyframe(
-        [0, 15],
-        [243, 360 * 2],
-        { type: 'degrees' }
-      ),
-      translate: {
-        x: new core.Keyframe(
-          [duration - 10, duration],
-          [0, -2000],
-          { easing: 'easeIn' }
-        ),
-        y: 0,
-      },
-      scale: new core.Keyframe([0, 10], [0.3, 1]),
       fontSize: 34
     })
   );
+
+  text.animate()
+    .rotation(243).to(360 * 2, 15)
+    .translateX(0, duration - 20, 'easeIn').to(-2000, 10)
+    .scale(0.3).to(1, 10)
 
   // provide custom web font. Local font strings are also supported
   // e.g. source: 'local('FlamboyantSansSerif')'

@@ -30,18 +30,16 @@ export async function main(composition: core.Composition) {
 
   // the html should be centered and hide when the 
   // question ends. Let's also apply some animations...
-  await composition.add(
+  const html = await composition.add(
     new core.HtmlClip(sources[2], {
       position: 'center',
-      stop: question.stop, // starts at scale 0.7 ends at scale 1 after 9 frames
-      scale: new core.Keyframe([0, 9], [0.7, 1], { easing: 'easeOut' }),
-      translate: {
-        x: 0, // starts at y offset 14 ends at 0 after 9 frames
-        y: new core.Keyframe([0, 9], [14, 0], { easing: 'easeOut' }),
-      }, // starts at opacity 0 ends at opacity 1 after 4 frames
-      alpha: new core.Keyframe([0, 4], [0, 1], { easing: 'easeOut' }),
+      stop: question.stop, 
     })
   )
+
+  html.animate()
+    .scale(0.7, 0, 'easeOut').to(1, 9) // starts at scale 0.7 ends at scale 1 after 9 frames 
+    .translateY(14, 0, 'easeOut').to(0, 9) // starts at y offset 14 ends at 0 after 9 frames
 
   // the transcript will be added to the audio for later use
   const audio = await composition.add(

@@ -19,7 +19,7 @@
     "@rollup/rollup-linux-x64-gnu": "4.9.5"
   },
   "dependencies": {
-    "@diffusionstudio/core": "^1.0.0-rc.3",
+    "@diffusionstudio/core": "^1.0.0-rc.4",
     "pixi-filters": "^6.0.5",
     "pixi.js": "^8.3.4"
   }
