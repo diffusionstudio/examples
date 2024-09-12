@@ -8,11 +8,11 @@ let fps = 30;
  * Export the provided composition
  * @param composition The composition to render
  */
-export async function exportComposition(composition: core.Composition) {
+export async function render(composition: core.Composition) {
   if (loader.style.display != 'none') return;
 
   try {
-    const encoder = new core.WebcodecsEncoder(composition, { debug: true, fps });
+    const encoder = new core.Encoder(composition, { debug: true, fps });
 
     // display the progress
     encoder.on('render', (event) => {
@@ -21,11 +21,11 @@ export async function exportComposition(composition: core.Composition) {
       text.innerHTML = `${Math.round(progress * 100 / total)}%`;
     })
 
-    await encoder.export();
+    await encoder.render();
   } catch (e) {
     if (e instanceof DOMException) {
       // user canceled file picker
-    } else if (e instanceof core.ExportError) {
+    } else if (e instanceof core.EncoderError) {
       // diffusion studio error
       alert(e.message);
     } else {

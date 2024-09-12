@@ -1,5 +1,5 @@
 import * as core from '@diffusionstudio/core';
-import { exportComposition } from './export';
+import { render } from './render';
 
 /**
  * Setup the playback controls
@@ -9,7 +9,7 @@ export function setupControls(composition: core.Composition) {
   const handlePause = () => composition.pause();
   const handleBack = () => composition.seek(0);
   const handleForward = () => composition.seek(composition.duration.frames);
-  const handleExport = () => exportComposition(composition);
+  const handleExport = () => render(composition);
 
   playButton.addEventListener('click', handlePlay);
   pauseButton.addEventListener('click', handlePause);

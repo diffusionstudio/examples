@@ -34,7 +34,6 @@ async function seed(composition: Composition) {
       rotation: new Keyframe(
         [0, 15],
         [243, 360 * 2],
-        { type: 'degrees' }
       ),
       translate: {
         x: new Keyframe(

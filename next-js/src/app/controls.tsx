@@ -2,7 +2,7 @@
 
 import { useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { WebcodecsEncoder } from '@diffusionstudio/core';
+import { Encoder } from '@diffusionstudio/core';
 import { PauseIcon, PlayIcon, TrackNextIcon, TrackPreviousIcon } from '@radix-ui/react-icons';
 import { Spinner } from './spinner';
 import { CompositionContext } from './context';
@@ -31,7 +31,7 @@ export function Controls() {
   const render = async () => {
     if (rendering || !composition) return;
 
-    const encoder = new WebcodecsEncoder(composition);
+    const encoder = new Encoder(composition);
 
     encoder.on('render', (event) => {
       const { progress, total } = event.detail;
@@ -46,7 +46,7 @@ export function Controls() {
       });
 
       setRendering(true);
-      await encoder.export(fileHandle);
+      await encoder.render(fileHandle);
     } finally {
       setRendering(false);
     }

@@ -91,7 +91,7 @@ async function fileApiExport(composition: core.Composition) {
   }
 
   try {
-    const encoder = new core.WebcodecsEncoder(composition, { debug: true });
+    const encoder = new core.Encoder(composition, { debug: true });
 
     encoder.on('render', (event) => {
       const { progress, total } = event.detail;
@@ -109,12 +109,12 @@ async function fileApiExport(composition: core.Composition) {
       ],
     });
     loader.style.display = 'block';
-    await encoder.export(fileHandle); // undefined or file handle
+    await encoder.render(fileHandle); // undefined or file handle
     alert('Video has been rendered successfully!')
   } catch (e) {
     if (e instanceof DOMException) {
       // user canceled file picker
-    } else if (e instanceof core.ExportError) {
+    } else if (e instanceof core.EncoderError) {
       alert(e.message);
     } else {
       alert(String(e))

@@ -1,77 +1,35 @@
-import { buildGeometryFromPath, Container, GraphicsPath, Mesh, Texture, WebGLRenderer } from 'pixi.js';
 import { CanvasEncoder, downloadObject } from '@diffusionstudio/core';
 
-(async () => {
-  // Create a new application
-  const renderer = new WebGLRenderer();
+// Make sure to assign video dimensions
+const canvas = new OffscreenCanvas(1920, 1080);
 
-  // Create root container
-  const stage = new Container();
+const encoder = new CanvasEncoder(canvas, { audio: true });
 
-  // Initialize the application
-  await renderer.init({
-    backgroundColor: 'brown',
-    height: 1080,
-    width: 1920,
-  });
+const ctx = canvas.getContext("2d")!;
 
-  document.body.appendChild(renderer.canvas);
+for (let i = 0; i < 90; i++) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // background
+  ctx.fillStyle = "blue";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  // text
+  ctx.fillStyle = "white";
+  ctx.font = "50px serif"; // animated Hello World
+  ctx.fillText("Hello world", 10 + i * 20, 10 + i * 12);
 
-  const path = new GraphicsPath()
-    .rect(-50, -50, 100, 100)
-    .circle(80, 80, 50)
-    .circle(80, -80, 50)
-    .circle(-80, 80, 50)
-    .circle(-80, -80, 50);
+  // Encode the current canvas state
+  await encoder.encodeVideo();
+}
 
-  const geometry = buildGeometryFromPath({
-    path,
-  });
+// optionally create audio buffer
+// using the WebAudio API
+const response = await fetch('https://diffusion-studio-public.s3.eu-central-1.amazonaws.com/audio/sfx/tada.mp3');
+const arrayBuffer = await response.arrayBuffer();
+const context = new OfflineAudioContext(1, 1, 48e3);
+const audioBuffer = await context.decodeAudioData(arrayBuffer);
 
-  const meshes: Mesh[] = [];
+// encode audio buffer (sample rate will be adapted for you)
+await encoder.encodeAudio(audioBuffer);
 
-  for (let i = 0; i < 200; i++) {
-    const x = Math.random() * renderer.screen.width;
-    const y = Math.random() * renderer.screen.height;
-
-    const mesh = new Mesh({
-      geometry,
-      texture: Texture.WHITE,
-      x,
-      y,
-      tint: Math.random() * 0xffffff,
-    });
-
-    stage.addChild(mesh);
-
-    meshes.push(mesh);
-  }
-
-  // create new encoder with a framerate of 30FPS
-  const encoder = new CanvasEncoder(renderer.canvas);
-
-  for (let i = 0; i < 180; i++) {
-    renderer.clear();
-    // render to canvas
-    renderer.render({ container: stage, clear: false });
-    // encode current canvas state
-    await encoder.encodeVideo();
-    // animate
-    meshes.forEach((mesh) => {
-      mesh.rotation += 0.02;
-    });
-  }
-
-  // optionally create audio buffer
-  // using the WebAudio API
-  const response = await fetch('https://diffusion-studio-public.s3.eu-central-1.amazonaws.com/audio/sfx/tada.mp3');
-  const arrayBuffer = await response.arrayBuffer();
-  const context = new OfflineAudioContext(1, 1, 48e3);
-  const audioBuffer = await context.decodeAudioData(arrayBuffer);
-
-  // encode audio buffer (sample rate will be adapted for you)
-  await encoder.encodeAudio(audioBuffer);
-
-  // finalize encoding/muxing and download result
-  downloadObject(await encoder.export(), 'test.mp4');
-})();
+// finalize encoding/muxing and download result
+downloadObject(await encoder.blob(), 'test.mp4');

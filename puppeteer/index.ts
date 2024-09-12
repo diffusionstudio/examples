@@ -61,7 +61,7 @@ async function main(presignedUrl: string) {
     await composition.add(text);
 
     // export video using webcodecs at 25 FPS
-    await new core.WebcodecsEncoder(composition, { fps: 25 }).export(presignedUrl);
+    await new core.Encoder(composition, { fps: 25 }).render(presignedUrl);
 
     return 'SUCCESS';
   } catch (e) {

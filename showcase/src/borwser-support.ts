@@ -1,11 +1,4 @@
-const isSupported =
-  typeof window !== 'undefined' &&
-  'navigator' in window &&
-  'VideoDecoder' in window &&
-  'VideoEncoder' in window &&
-  'AudioEncoder' in window &&
-  'AudioContext' in window &&
-  'chrome' in window;
+const isSupported = !navigator.userAgent.toLowerCase().includes('firefox');
 
 
 if (!isSupported) {

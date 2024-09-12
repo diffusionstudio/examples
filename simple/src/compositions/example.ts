@@ -28,8 +28,7 @@ await composition.add(
     font: boldFont,
     rotation: new Keyframe(
       [0, 15],
-      [243, 360 * 2],
-      { type: 'degrees' }
+      [243, 360 * 2]
     ),
     translate: {
       x: new Keyframe(
