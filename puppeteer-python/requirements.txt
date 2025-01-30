@@ -1,2 +1,0 @@
-pyppeteer==2.0.0
-asyncio==3.4.3
