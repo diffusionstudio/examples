@@ -33,7 +33,7 @@ class AlienClip extends Clip {
   }
 
   // Update the clip's state on each frame. Receives a `Timestamp` argument.
-  public override update(renderer: Renderer, time: Timestamp): void | Promise<void> {
+  public override update(_renderer: Renderer, _time: Timestamp): void | Promise<void> {
     // This can be useful for computationally expensive operations.
   }
 
