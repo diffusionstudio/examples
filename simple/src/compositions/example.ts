@@ -1,4 +1,4 @@
-import * as core from '@diffusionstudio/core-v2';
+import * as core from '@diffusionstudio/core';
 
 export const composition = new core.Composition();
 

@@ -2,7 +2,7 @@
 
 import { useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { Encoder } from '@diffusionstudio/core-v2';
+import { Encoder } from '@diffusionstudio/core';
 import { PauseIcon, PlayIcon, TrackNextIcon, TrackPreviousIcon } from '@radix-ui/react-icons';
 import { Spinner } from './spinner';
 import { CompositionContext } from './context';

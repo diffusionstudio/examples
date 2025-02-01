@@ -1,5 +1,5 @@
-import { ClipProps, Clip, Timestamp, Renderer } from '@diffusionstudio/core-v2';
-import type { Composition } from '@diffusionstudio/core-v2';
+import { ClipProps, Clip, Timestamp, Renderer } from '@diffusionstudio/core';
+import type { Composition } from '@diffusionstudio/core';
 
 // Define custom Clip properties extending `ClipProps`, such as start, stop, etc.
 interface AlienClipProps extends ClipProps {

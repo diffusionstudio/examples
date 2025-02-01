@@ -19,6 +19,6 @@
     "@rollup/rollup-linux-x64-gnu": "4.9.5"
   },
   "dependencies": {
-    "@diffusionstudio/core-v2": "^0.4.3"
+    "@diffusionstudio/core": "^2.0.0"
   }
 }

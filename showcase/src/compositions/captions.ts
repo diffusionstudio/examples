@@ -1,4 +1,4 @@
-import * as core from '@diffusionstudio/core-v2';
+import * as core from '@diffusionstudio/core';
 import { Settings } from '../types';
 
 export const settings: Settings = { height: 1920, width: 1080 };
@@ -13,7 +13,7 @@ export async function main(composition: core.Composition) {
   // add a background image
   await composition.add(
     new core.ImageClip(sources[0], {
-      duration: core.Timestamp.fromSeconds(22),
+      duration: new core.Timestamp(0, 22),
       rotation: 90,
       position: 'center',
     })

@@ -1,4 +1,4 @@
-import * as core from '@diffusionstudio/core-v2';
+import * as core from '@diffusionstudio/core';
 
 export async function main(composition: core.Composition) {
   const source = await core.VideoSource
@@ -10,7 +10,7 @@ export async function main(composition: core.Composition) {
   });
 
   // Let's limit the composition duration to 19 seconds
-  composition.duration = core.Timestamp.fromSeconds(19);
+  composition.duration = new core.Timestamp(0, 19);
 
   await composition.add(
     new core.VideoClip(source, {

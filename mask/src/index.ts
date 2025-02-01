@@ -1,4 +1,4 @@
-import * as core from '@diffusionstudio/core-v2';
+import * as core from '@diffusionstudio/core';
 import { setupControls } from './controls';
 import { setupTimeline } from './timeline';
 

@@ -2,7 +2,7 @@ import puppeteer from 'puppeteer';
 import { S3Client } from '@aws-sdk/client-s3';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import * as core from '@diffusionstudio/core-v2';
+import * as core from '@diffusionstudio/core';
 
 declare global {
   interface Window {
@@ -79,7 +79,7 @@ async function main(presignedUrl: string) {
 
   // Inject required scripts
   await page.addScriptTag({ path: './node_modules/mp4-muxer/build/mp4-muxer.js' });
-  await page.addScriptTag({ path: './node_modules/@diffusionstudio/core-v2/dist/core.umd.js' });
+  await page.addScriptTag({ path: './node_modules/@diffusionstudio/core/dist/core.umd.js' });
 
   // Wait for both scripts to load
   await page.waitForFunction(() => typeof window.core !== 'undefined');

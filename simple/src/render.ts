@@ -1,5 +1,5 @@
 
-import * as core from '@diffusionstudio/core-v2';
+import * as core from '@diffusionstudio/core';
 
 // keep fps in memory
 let fps = 30;

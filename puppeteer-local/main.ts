@@ -1,5 +1,5 @@
 import puppeteer, { ElementHandle } from 'puppeteer';
-import * as core from '@diffusionstudio/core-v2';
+import * as core from '@diffusionstudio/core';
 import fs from 'fs';
 
 declare global {
@@ -76,7 +76,7 @@ async function run() {
 
   // Inject required scripts
   await page.addScriptTag({ path: './node_modules/mp4-muxer/build/mp4-muxer.js' });
-  await page.addScriptTag({ path: './node_modules/@diffusionstudio/core-v2/dist/core.umd.js' });
+  await page.addScriptTag({ path: './node_modules/@diffusionstudio/core/dist/core.umd.js' });
 
   await page.waitForFunction(() => typeof window.core !== 'undefined');
   await page.waitForFunction(() => typeof window.Mp4Muxer !== 'undefined');

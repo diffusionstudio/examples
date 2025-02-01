@@ -46,7 +46,7 @@ def main(playwright: Playwright):
         page.goto("https://www.cloudflare.com/cdn-cgi/trace")
         page.add_script_tag(url="https://unpkg.com/mp4-muxer")
         page.add_script_tag(
-            url="https://unpkg.com/@diffusionstudio/core-v2/dist/core.umd.js"
+            url="https://unpkg.com/@diffusionstudio/core/dist/core.umd.js"
         )
         page.wait_for_function("typeof window.core !== 'undefined'")
         page.wait_for_function("typeof window.Mp4Muxer !== 'undefined'")

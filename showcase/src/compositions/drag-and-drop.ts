@@ -1,4 +1,4 @@
-import * as core from '@diffusionstudio/core-v2';
+import * as core from '@diffusionstudio/core';
 
 export async function main(composition: core.Composition) {
   const text = await composition.add(
