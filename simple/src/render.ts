@@ -21,7 +21,7 @@ export async function render(composition: core.Composition) {
       text.innerHTML = `${Math.round(progress * 100 / total)}%`;
     })
 
-    await encoder.render();
+    await encoder.render('video.mp4');
   } catch (e) {
     if (e instanceof DOMException) {
       // user canceled file picker
