@@ -1,30 +1,25 @@
-import * as core from '@diffusionstudio/core';
+import * as core from '@diffusionstudio/core-v3';
 import { Settings } from '../types';
 
 export const settings: Settings = { height: 1920, width: 1080 };
 
 export async function main(composition: core.Composition) {
-  // Fetch all resources in parallel
-  const sources = await Promise.all([
-    core.VideoSource.from('https://diffusion-studio-public.s3.eu-central-1.amazonaws.com/videos/minecraft_parkour_1080p_light.mp4'),
-    core.AudioSource.from('https://diffusion-studio-public.s3.eu-central-1.amazonaws.com/audio/elevenlabs_44100.mp3'),
-    core.HtmlSource.from('https://diffusion-studio-public.s3.eu-central-1.amazonaws.com/html/question_and_answer_card.html'),
-    core.Transcript.from('https://diffusion-studio-public.s3.eu-central-1.amazonaws.com/docs/ai_ft_coding_captions.json'),
-  ]);
+  const transcript = await core.Transcript.from('https://diffusion-studio-public.s3.eu-central-1.amazonaws.com/docs/ai_ft_coding_captions.json');
+  const html = await core.Source.from<core.HtmlSource>('https://diffusion-studio-public.s3.eu-central-1.amazonaws.com/html/question_and_answer_card.html');
 
   // remove line to see the difference
-  sources[3].optimize();
+  transcript.optimize();
 
   // Get the first scentence of the transcript (question)
-  const question = sources[3].groups[0];
+  const question = transcript.groups[0];
 
   // manipulate html source to manipulate title
   // the HtmlSource uses an Iframe in the background
-  sources[2].document!.getElementById('title')!.textContent = question.text;
+  html.document!.getElementById('title')!.textContent = question.text;
 
   // add the Video, make sure it centered
   await composition.add(
-    new core.VideoClip(sources[0], {
+    new core.VideoClip('https://diffusion-studio-public.s3.eu-central-1.amazonaws.com/videos/minecraft_parkour_1080p_light.mp4', {
       muted: true,
       position: 'center',
       height: '100%'
@@ -34,22 +29,22 @@ export async function main(composition: core.Composition) {
   // the html should be centered and hide when the 
   // question ends. Let's also apply some animations...
   await composition.add(
-    new core.HtmlClip(sources[2], {
+    new core.HtmlClip(html, {
       position: 'center',
       duration: question.stop,
       animations: [
         {
           key: 'scale',
           frames: [
-            { value: 0.7, frame: 0 },
-            { value: 1, frame: 9 }
+            { time: 0, value: 0.7 },
+            { time: 9, value: 1 }
           ],
           easing: 'ease-out',
         }, {
           key: 'translateY',
           frames: [
-            { value: 14, frame: 0 },
-            { value: 0, frame: 9 }
+            { time: 0, value: 14 },
+            { time: 9, value: 0 }
           ],
           easing: 'ease-out',
         }
@@ -58,13 +53,13 @@ export async function main(composition: core.Composition) {
   );
   // the transcript will be added to the audio for later use
   const audio = await composition.add(
-    new core.AudioClip(sources[1], {
-      transcript: sources[3]
+    new core.AudioClip('https://diffusion-studio-public.s3.eu-central-1.amazonaws.com/audio/elevenlabs_44100.mp3', {
+      transcript
     })
   );
 
   // Create a new caption track
-  const captions = await audio.createCaptions(core.GuineaCaptionPreset);
+  const captions = await composition.createCaptions(audio, core.GuineaCaptionPreset);
 
   // hide all clips as long as the html card is visible
   for (const clip of captions.clips) {

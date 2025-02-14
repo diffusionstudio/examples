@@ -1,12 +1,12 @@
-import * as core from '@diffusionstudio/core';
+import * as core from '@diffusionstudio/core-v3';
 import { Settings } from '../types';
 
 export const settings: Settings = { height: 1920, width: 1080 };
 
 export async function main(composition: core.Composition) {
   const sources = await Promise.all([
-    core.VideoSource.from('https://diffusion-studio-public.s3.eu-central-1.amazonaws.com/videos/minecraft_parkour_1080p_light.mp4'),
-    core.AudioSource.from('https://diffusion-studio-public.s3.eu-central-1.amazonaws.com/audio/elevenlabs_44100.mp3'),
+    core.Source.from<core.VideoSource>('https://diffusion-studio-public.s3.eu-central-1.amazonaws.com/videos/minecraft_parkour_1080p_light.mp4'),
+    core.Source.from<core.AudioSource>('https://diffusion-studio-public.s3.eu-central-1.amazonaws.com/audio/elevenlabs_44100.mp3'),
     core.Transcript.from('https://diffusion-studio-public.s3.eu-central-1.amazonaws.com/docs/ai_ft_coding_captions.json'),
   ]);
 
@@ -27,14 +27,11 @@ export async function main(composition: core.Composition) {
    */
   class TikTokCaptionPreset implements core.CaptionPresetStrategy {
     // required for serialization/deserialization
-    public type = 'TIKTOK'
     public position: core.RelativePoint = { x: '50%', y: '70%' };
 
     // this is the required function that gets an empty track
     // and appends the text or complex text clips
-    public async applyTo(track: core.CaptionTrack): Promise<void> {
-      if (!track.clip?.transcript) return;
-
+    public async apply(layer: core.Layer, source: core.AudioClip): Promise<void> {
       const font = await core.FontManager.load({ family: 'Montserrat', weight: '500' });
 
       // iter accepts the config parameters count, duration, length
@@ -42,12 +39,12 @@ export async function main(composition: core.Composition) {
       // duration: determines the duration of a group
       // length: determines the number of characters in a group
       // use a range of values to randomize the output e.g. [2, 6]
-      for (const words of track.clip.transcript.iter({ duration: [3] })) {
-        await track.add(
+      for (const words of source.transcript?.iter({ duration: [3] }) ?? []) {
+        await layer.add(
           new core.RichTextClip({
             text: words.text,
-            delay: words.start,
-            duration: words.stop.subtract(words.start),
+            delay: words.start.add(source.delay),
+            duration: words.duration,
             font,
             align: 'center',
             fontSize: 16,
@@ -72,7 +69,7 @@ export async function main(composition: core.Composition) {
     }
   }
 
-  await audio.createCaptions(TikTokCaptionPreset); // <- insert here
+  await composition.createCaptions(audio, TikTokCaptionPreset); // <- insert here
 
   composition.duration = audio.duration;
 }

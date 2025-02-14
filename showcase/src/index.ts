@@ -1,4 +1,4 @@
-import * as core from '@diffusionstudio/core';
+import * as core from '@diffusionstudio/core-v3';
 
 const select = document.querySelector('select') as HTMLSelectElement;
 const container = document.querySelector('[id="player-container"]') as HTMLDivElement;

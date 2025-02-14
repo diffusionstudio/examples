@@ -1,24 +1,22 @@
-import * as core from '@diffusionstudio/core';
+import * as core from '@diffusionstudio/core-v3';
 
 export async function main(composition: core.Composition) {
-  const source = await core.VideoSource.from('https://diffusion-studio-public.s3.eu-central-1.amazonaws.com/videos/big_buck_bunny_1080p_30fps.mp4');
-
   const video0 = await composition.add(
-    new core.VideoClip(source, {
+    new core.VideoClip('https://diffusion-studio-public.s3.eu-central-1.amazonaws.com/videos/big_buck_bunny_1080p_30fps.mp4', {
       position: 'center',
       animations: [
         {
           key: 'scale',
           frames: [
-            { value: 0.1, frame: 0 },
-            { value: 1, frame: 30 }
+            { time: 0, value: 0.1 },
+            { time: '1s', value: 1 }
           ]
         },
         {
           key: 'rotation',
           frames: [
-            { value: 0, frame: 0 },
-            { value: 360, frame: 30 }
+            { time: 0, value: 0 },
+            { time: '1s', value: 360 }
           ]
         },
       ]
@@ -37,8 +35,8 @@ export async function main(composition: core.Composition) {
     {
       key: 'translateX',
       frames: [
-        { value: composition.width, frame: 0 },
-        { value: 0, frame: 10 }
+        { value: composition.width, time: 0 },
+        { value: 0, time: 10 }
       ]
     }
   ]
