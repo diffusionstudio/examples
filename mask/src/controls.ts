@@ -1,4 +1,4 @@
-import * as core from '@diffusionstudio/core';
+import * as core from '@diffusionstudio/core-v3';
 import { render } from './render';
 
 /**
