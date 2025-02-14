@@ -2,7 +2,7 @@
 
 import { useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { Encoder } from '@diffusionstudio/core';
+import { Encoder } from '@diffusionstudio/core-v3';
 import { PauseIcon, PlayIcon, TrackNextIcon, TrackPreviousIcon } from '@radix-ui/react-icons';
 import { Spinner } from './spinner';
 import { CompositionContext } from './context';
@@ -40,6 +40,7 @@ export function Controls() {
     });
 
     try {
+      // @ts-ignore
       const fileHandle = await window.showSaveFilePicker({
         suggestedName: `untitled_video.mp4`,
         types: [{ accept: { 'video/mp4': ['.mp4'] } }],
