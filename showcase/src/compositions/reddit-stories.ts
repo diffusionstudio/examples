@@ -19,7 +19,7 @@ export async function main(composition: core.Composition) {
 
   // add the Video, make sure it centered
   await composition.add(
-    new core.VideoClip('https://diffusion-studio-public.s3.eu-central-1.amazonaws.com/videos/minecraft_parkour_1080p_light.mp4', {
+    new core.VideoClip('https://diffusion-studio-public.s3.eu-central-1.amazonaws.com/videos/minecraft_parkour_1080p.mp4', {
       muted: true,
       position: 'center',
       height: '100%'
