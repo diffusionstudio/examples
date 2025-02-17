@@ -25,13 +25,10 @@ export async function main(composition: core.Composition) {
   /**
    * Default Tiktok captions clone
    */
-  class TikTokCaptionPreset implements core.CaptionPresetStrategy {
-    // required for serialization/deserialization
-    public position: core.RelativePoint = { x: '50%', y: '70%' };
-
+  class TikTokCaptionPreset extends core.CaptionPreset {
     // this is the required function that gets an empty track
     // and appends the text or complex text clips
-    public async apply(layer: core.Layer, source: core.AudioClip): Promise<void> {
+    public async apply(layer: core.Layer, transcript: core.Transcript, offset: core.Timestamp): Promise<void> {
       const font = await core.FontManager.load({ family: 'Montserrat', weight: '500' });
 
       // iter accepts the config parameters count, duration, length
@@ -39,11 +36,11 @@ export async function main(composition: core.Composition) {
       // duration: determines the duration of a group
       // length: determines the number of characters in a group
       // use a range of values to randomize the output e.g. [2, 6]
-      for (const words of source.transcript?.iter({ duration: [3] }) ?? []) {
+      for (const words of transcript.iter({ duration: [3] })) {
         await layer.add(
           new core.RichTextClip({
             text: words.text,
-            delay: words.start.add(source.delay),
+            delay: words.start.add(offset),
             duration: words.duration,
             font,
             align: 'center',
@@ -69,7 +66,11 @@ export async function main(composition: core.Composition) {
     }
   }
 
-  await composition.createCaptions(audio, TikTokCaptionPreset); // <- insert here
+  await composition.createCaptions(audio,
+    new TikTokCaptionPreset({
+      position: { x: '50%', y: '70%' }
+    })
+  );
 
   composition.duration = audio.duration;
 }
