@@ -1,4 +1,4 @@
-import * as core from '@diffusionstudio/core-v3';
+import * as core from '@diffusionstudio/core';
 import { Settings } from '../types';
 
 export const settings: Settings = { height: 1920, width: 1080 };

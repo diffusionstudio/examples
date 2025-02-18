@@ -1,4 +1,4 @@
-import * as core from '@diffusionstudio/core-v3';
+import * as core from '@diffusionstudio/core';
 
 // Define custom Clip properties extending `ClipProps`, such as start, stop, etc.
 interface AlienClipProps extends core.ClipProps {

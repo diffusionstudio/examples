@@ -1,6 +1,6 @@
 "use client";
 
-import { Composition } from "@diffusionstudio/core-v3";
+import { Composition } from "@diffusionstudio/core";
 import { CompositionContext } from "./context";
 import { useEffect, useState } from "react";
 import { Player } from "./player";

@@ -1,4 +1,4 @@
-import * as core from "@diffusionstudio/core-v3";
+import * as core from "@diffusionstudio/core";
 import { useContext, useEffect, useState } from "react";
 import { CompositionContext } from "./context";
 
