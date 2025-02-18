@@ -40,6 +40,7 @@ export function Controls() {
     });
 
     try {
+      // @ts-ignore
       const fileHandle = await window.showSaveFilePicker({
         suggestedName: `untitled_video.mp4`,
         types: [{ accept: { 'video/mp4': ['.mp4'] } }],

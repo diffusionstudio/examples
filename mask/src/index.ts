@@ -3,7 +3,6 @@ import { setupControls } from './controls';
 import { setupTimeline } from './timeline';
 
 const composition = new core.Composition();
-const library = new core.Library();
 
 // define configuration
 const height = 720;
@@ -19,17 +18,12 @@ const avatarX = videoX + videoWidth + gap;
 
 const y = (composition.height - height) * 0.5;
 
-// load assets
-await library.add(
-  core.ImageSource.from('/raycast_moonrise.png'),
-  core.VideoSource.from('/carrio_code_ocamel.mp4'),
-  core.VideoSource.from('/latentsync_predicition.mp4'),
-);
+const videoSource = await core.Source.from<core.VideoSource>('/latentsync_predicition.mp4');
 
 await composition.add(
-  new core.ImageClip(library.at<core.ImageSource>(0), {
+  new core.ImageClip('/raycast_moonrise.png', {
     height: '100%',
-    duration: library.at<core.VideoSource>(2).duration,
+    duration: videoSource.duration,
   })
 );
 
@@ -54,11 +48,11 @@ const videoMask = new core.RectangleMask({
 });
 
 await composition.add(
-  new core.VideoClip(library.at<core.VideoSource>(1), {
+  new core.VideoClip('/carrio_code_ocamel.mp4', {
     height: height,
     x: videoX,
     y,
-    duration: library.at<core.VideoSource>(2).duration,
+    duration: videoSource.duration,
     mask: videoMask,
   })
 );
@@ -84,7 +78,7 @@ const avatarMask = new core.RectangleMask({
 });
 
 await composition.add(
-  new core.VideoClip(library.at<core.VideoSource>(2), {
+  new core.VideoClip('/latentsync_predicition.mp4', {
     height: height,
     x: avatarX,
     y,

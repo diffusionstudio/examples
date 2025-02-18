@@ -3,10 +3,7 @@ import * as core from '@diffusionstudio/core';
 export async function main(composition: core.Composition) {
   const manager = new core.FontManager();
   const video = await composition.add(
-    new core.VideoClip(
-      await core.VideoSource
-        .from('https://diffusion-studio-public.s3.eu-central-1.amazonaws.com/videos/drone_footage_1080p_25fps.mp4')
-    )
+    new core.VideoClip('https://diffusion-studio-public.s3.eu-central-1.amazonaws.com/videos/drone_footage_1080p_25fps.mp4')
   );
 
   const duration = video.duration.frames;
@@ -23,20 +20,20 @@ export async function main(composition: core.Composition) {
       animations: [{
         key: 'rotation',
         frames: [
-          { value: 243, frame: 0 },
-          { value: 360 * 2, frame: 15 }
+          { time: 0, value: 243 },
+          { time: 15, value: 360 * 2 }
         ]
       }, {
         key: 'translateX',
         frames: [
-          { value: 0, frame: duration - 20 },
-          { value: -2000, frame: duration }
+          { time: duration - 20, value: 0 },
+          { time: duration, value: -2000 }
         ]
       }, {
         key: 'scale',
         frames: [
-          { value: 0.3, frame: 0 },
-          { value: 1, frame: 10 }
+          { time: 0, value: 0.3 },
+          { time: 10, value: 1 }
         ]
       }]
     })

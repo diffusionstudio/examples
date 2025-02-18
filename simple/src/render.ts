@@ -12,7 +12,7 @@ export async function render(composition: core.Composition) {
   if (loader.style.display != 'none') return;
 
   try {
-    const encoder = new core.Encoder(composition, { debug: true, fps });
+    const encoder = new core.Encoder(composition, { debug: true, video: { fps } });
 
     // display the progress
     encoder.on('render', (event) => {

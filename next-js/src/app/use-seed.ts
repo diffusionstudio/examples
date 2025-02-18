@@ -19,10 +19,7 @@ async function seed(composition: core.Composition) {
   const manager = new core.FontManager();
 
   const video = await composition.add(
-    new core.VideoClip(
-      await core.VideoSource
-        .from('https://diffusion-studio-public.s3.eu-central-1.amazonaws.com/videos/drone_footage_1080p_25fps.mp4')
-    )
+    new core.VideoClip('https://diffusion-studio-public.s3.eu-central-1.amazonaws.com/videos/drone_footage_1080p_25fps.mp4')
   );
 
   const boldfont = await manager.load({ family: 'The Bold Font', weight: '500' });
@@ -41,20 +38,20 @@ async function seed(composition: core.Composition) {
       animations: [{
         key: 'rotation',
         frames: [
-          { frame: 0, value: 243 },
-          { frame: 15, value: 360 * 2 },
+          { time: 0, value: 243 },
+          { time: 15, value: 360 * 2 },
         ]
       }, {
         key: 'translateX',
         frames: [
-          { frame: duration - 10, value: 0 },
-          { frame: duration, value: -2000 },
+          { time: duration - 10, value: 0 },
+          { time: duration, value: -2000 },
         ]
       }, {
         key: 'scale',
         frames: [
-          { frame: 0, value: 0.3 },
-          { frame: 10, value: 1 },
+          { time: 0, value: 0.3 },
+          { time: 10, value: 1 },
         ]
       }]
     })
