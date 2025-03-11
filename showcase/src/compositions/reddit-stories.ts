@@ -62,7 +62,10 @@ export async function main(composition: core.Composition) {
   );
 
   // Create a new caption track
-  const captions = await composition.createCaptions(audio, core.GuineaCaptionPreset);
+  const captions = await composition.createCaptions(
+    audio,
+    new core.SpotlightCaptionPreset({ color: '#12ccff' })
+  );
 
   // hide all clips as long as the html card is visible
   for (const clip of captions.clips) {
