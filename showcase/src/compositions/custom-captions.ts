@@ -38,15 +38,15 @@ export async function main(composition: core.Composition) {
       // use a range of values to randomize the output e.g. [2, 6]
       for (const words of transcript.iter({ duration: [3] })) {
         await layer.add(
-          new core.RichTextClip({
+          new core.TextClip({
             text: words.text,
             delay: words.start.add(offset),
             duration: words.duration,
             font,
             align: 'center',
-            fontSize: 16,
+            fontSize: 19,
             stroke: {
-              width: 3,
+              width: 5,
             },
             shadow: {
               color: '#000000',
