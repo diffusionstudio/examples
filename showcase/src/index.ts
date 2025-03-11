@@ -80,7 +80,7 @@ async function fileApiExport(composition: core.Composition) {
   if (loader.style.display != 'none') return;
   if (!('showSaveFilePicker' in window)) {
     // use in memory as fallback
-    Object.assign(window, { showSaveFilePicker: async () => undefined })
+    Object.assign(window, { showSaveFilePicker: async () => 'rendered_video.mp4' })
   }
 
   try {
