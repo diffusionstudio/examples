@@ -24,8 +24,8 @@ export async function main(composition: core.Composition) {
   const spotlight = new core.SpotlightCaptionPreset({ color: '#12ccff', position: { x: '75%', y: '50%' } });
   const cascade = new core.CascadeCaptionPreset({ position: { x: '25%', y: '68%' } });
   const whisperCaption = new core.WhisperCaptionPreset({ position: { x: '75%', y: '88%' } });
-  const verdant = new core.VerdantCaptionPreset({ position: { x: '30%', y: '90%' } });
- 
+  const verdant = new core.VerdantCaptionPreset({ position: { x: '30%', y: '90%' }, generatorOptions: { count: [4] } });
+
 
   // Now let's add all available caption preset
   await composition.createCaptions(transcript, classic);
