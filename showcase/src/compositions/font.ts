@@ -2,8 +2,12 @@ import * as core from '@diffusionstudio/core';
 
 export async function main(composition: core.Composition) {
   const manager = new core.FontManager();
+  const source = await core.Source.from<core.VideoSource>(
+    'https://diffusion-studio-public.s3.eu-central-1.amazonaws.com/videos/drone_footage_1080p_25fps.mp4',
+    { prefetch: true }
+  );
   const video = await composition.add(
-    new core.VideoClip('https://diffusion-studio-public.s3.eu-central-1.amazonaws.com/videos/drone_footage_1080p_25fps.mp4')
+    new core.VideoClip(source)
   );
 
   const duration = video.duration.frames;

@@ -5,8 +5,8 @@ export const settings: Settings = { height: 1920, width: 1080 };
 
 export async function main(composition: core.Composition) {
   const sources = await Promise.all([
-    core.Source.from<core.VideoSource>('https://diffusion-studio-public.s3.eu-central-1.amazonaws.com/videos/minecraft_parkour_1080p_light.mp4'),
-    core.Source.from<core.AudioSource>('https://diffusion-studio-public.s3.eu-central-1.amazonaws.com/audio/elevenlabs_44100.mp3'),
+    core.Source.from<core.VideoSource>('https://diffusion-studio-public.s3.eu-central-1.amazonaws.com/videos/minecraft_parkour_1080p_light.mp4', { prefetch: true }),
+    core.Source.from<core.AudioSource>('https://diffusion-studio-public.s3.eu-central-1.amazonaws.com/audio/elevenlabs_44100.mp3', { prefetch: true }),
     core.Transcript.from('https://diffusion-studio-public.s3.eu-central-1.amazonaws.com/docs/ai_ft_coding_captions.json'),
   ]);
 

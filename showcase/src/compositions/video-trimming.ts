@@ -2,7 +2,10 @@ import * as core from '@diffusionstudio/core';
 
 export async function main(composition: core.Composition) {
   const source = await core.Source
-    .from<core.VideoSource>('https://diffusion-studio-public.s3.eu-central-1.amazonaws.com/videos/big_buck_bunny_1080p_30fps.mp4');
+    .from<core.VideoSource>(
+      'https://diffusion-studio-public.s3.eu-central-1.amazonaws.com/videos/big_buck_bunny_1080p_30fps.mp4',
+      { prefetch: true }
+    );
 
   const font = await core.FontManager.load({
     family: 'Geologica',
